@@ -11,7 +11,9 @@ function processData(input) {
         let subIn = 1
         for(let si in string){//create array of substrings
             for(let i=subIn;i<=len;i++){
-                subs.push(string.substring(si,i));
+                let subStr = string.substring(si,i);
+                let sortedSub = subStr.split('').sort().join('');
+                subs.push(sortedSub);
             }
             subIn++;//this right here is the key to all this.
         }
@@ -24,9 +26,7 @@ function processData(input) {
                 let subStrB = subs[i];
                 let bLen = subStrB.length;
                 if (aLen === bLen){//all possible same length substring combos.
-                    let sortedA = subStrA.split('').sort().join(''); //sort!!!!
-                    let sortedB = subStrB.split('').sort().join('');
-                    if(sortedA == sortedB){
+                    if(subStrA == subStrB){
                         pairs++;
                     }
                 } 
