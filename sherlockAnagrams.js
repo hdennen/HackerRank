@@ -4,8 +4,8 @@ function processData(input) {
     'use strict';
     const strings = input.split('\n');
     const t = strings.shift();
-    let pairs = 0;
     for(let string of strings){ //operate on each string.
+        let pairs = 0; //eventually Die Antwoord.
         let subs = [];
         let len = string.length;
         let subIn = 1
@@ -15,7 +15,6 @@ function processData(input) {
             }
             subIn++;//this right here is the key to all this.
         }
-        //console.log(subs);
         let sLen = subs.length; //length of substrings array.
         let subStrBIn = 1; //substring B start index
         for(let key in subs){ //first sub string loop
@@ -24,12 +23,16 @@ function processData(input) {
             for(let i = subStrBIn; i<sLen; i++){ //comparitive substring loop
                 let subStrB = subs[i];
                 let bLen = subStrB.length;
-                if (aLen === bLen){
-                    console.log(subStrA+' '+subStrB);
+                if (aLen === bLen){//all possible same length substring combos.
+                    let sortedA = subStrA.split('').sort().join(''); //sort!!!!
+                    let sortedB = subStrB.split('').sort().join('');
+                    if(sortedA == sortedB){
+                        pairs++;
+                    }
                 } 
             }
             subStrBIn++;
         }
-        //console.log(pairs);
+        console.log(pairs);
     }
 } 
