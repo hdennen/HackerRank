@@ -1,24 +1,18 @@
 //https://www.hackerrank.com/challenges/maxsubarray
-//using slice() instead of my helper range function.
+//replaced my recursive function with Kadane's algorithm. Much faster, but needs fixing to handle negatives.
 function processData(input) {
     'use strict';
     const tests = input.split('\n');
     const t = tests.shift();
-    const findMax = function(test, tempMax, currentMax){ //recursive function to find max of contiguous array.
-        for(let i in test){
-            let n = parseInt(i)+1; //i is apparently not an integer and '+' will just concatenate it...
-            tempMax = test.slice(0,n).reduce((b,a)=> b+a);
-            if(tempMax > currentMax){
-                currentMax = tempMax;
-            }
+    const kadane = function(test){ //Kadane's algorithm for max contiguous array.
+        let currentTotal = 0; 
+        let maxSoFar = 0;
+        for(let item of test){
+            currentTotal = Math.max(0, currentTotal+item);
+            maxSoFar = Math.max(maxSoFar,currentTotal)
         }
-        test.shift();
-        if(test.length > 0){
-            findMax(test, tempMax, currentMax);
-        }else{
-            max = currentMax;
-        }
-    };
+        max = maxSoFar;
+    }
     const findNCMax = function(testNC){ //find non-contiguous sub array max. sum of positives.
         testNC.sort((a,b)=> a-b).reverse(); //special sort for integers. 
         let subArr = [];
@@ -36,17 +30,13 @@ function processData(input) {
         }else{
             ncMax = biggestNeg;
         }
-        
     }
     for (let i=1; i<t*2; i+=2){ //loop through each test
         let test = tests[i].split(' ').map(Number);
-        let testNC = tests[i].split(' ').map(Number);
-        let currentMax = -10000;
-        let tempMax = 0;
         var max = 0; 
         var ncMax = 0;
-        findMax(test, tempMax, currentMax);
-        findNCMax(testNC);
+        kadane(test);
+        findNCMax(test);
         console.log(max+' '+ncMax);
     }
 } 
