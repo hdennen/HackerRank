@@ -1,21 +1,13 @@
 //https://www.hackerrank.com/challenges/maxsubarray
-//only calculates contiguous max.
+//using slice() instead of my helper range function.
 function processData(input) {
     'use strict';
     const tests = input.split('\n');
     const t = tests.shift();
-    const range = function(array, end){ //helper function to create a subarray by range
-        let a = [];
-        let ai = 0;
-        while(ai<=end){
-            a.push(array[ai]);
-            ai++;
-        }
-        return a;
-    };
     const findMax = function(test, tempMax, currentMax){ //recursive function to find max of contiguous array.
         for(let i in test){
-            tempMax = range(test,i).reduce((b,a)=> b+a);
+            let n = parseInt(i)+1; //i is apparently not an integer and '+' will just concatenate it...
+            tempMax = test.slice(0,n).reduce((b,a)=> b+a);
             if(tempMax > currentMax){
                 currentMax = tempMax;
             }
@@ -49,7 +41,7 @@ function processData(input) {
     for (let i=1; i<t*2; i+=2){ //loop through each test
         let test = tests[i].split(' ').map(Number);
         let testNC = tests[i].split(' ').map(Number);
-        let currentMax = -10000; //within range of input.
+        let currentMax = -10000;
         let tempMax = 0;
         var max = 0; 
         var ncMax = 0;
