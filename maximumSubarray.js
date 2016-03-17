@@ -29,7 +29,6 @@ function processData(input) {
     };
     const findNCMax = function(testNC){ //find non-contiguous sub array max. sum of positives.
         testNC.sort((a,b)=> a-b).reverse(); //special sort for integers. 
-        console.log(testNC);
         let subArr = [];
         let biggestNeg = 0;
         for(let i in testNC){
@@ -50,7 +49,7 @@ function processData(input) {
     for (let i=1; i<t*2; i+=2){ //loop through each test
         let test = tests[i].split(' ').map(Number);
         let testNC = tests[i].split(' ').map(Number);
-        let currentMax = 0;
+        let currentMax = -10000; //within range of input.
         let tempMax = 0;
         var max = 0; 
         var ncMax = 0;
