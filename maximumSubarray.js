@@ -27,12 +27,35 @@ function processData(input) {
             max = currentMax;
         }
     };
+    const findNCMax = function(testNC){ //find non-contiguous sub array max. sum of positives.
+        testNC.sort((a,b)=> a-b).reverse(); //special sort for integers. 
+        console.log(testNC);
+        let subArr = [];
+        let biggestNeg = 0;
+        for(let i in testNC){
+            if(testNC[i]>-1){
+                subArr.push(testNC[i]);
+            }else{
+                biggestNeg = testNC[i]; //save the biggest negative just in case.
+                break;
+            }
+        }
+        if(subArr.length>0){
+            ncMax = subArr.reduce((b,a)=> b+a);
+        }else{
+            ncMax = biggestNeg;
+        }
+        
+    }
     for (let i=1; i<t*2; i+=2){ //loop through each test
         let test = tests[i].split(' ').map(Number);
+        let testNC = tests[i].split(' ').map(Number);
         let currentMax = 0;
         let tempMax = 0;
         var max = 0; 
+        var ncMax = 0;
         findMax(test, tempMax, currentMax);
-        console.log(max);
+        findNCMax(testNC);
+        console.log(max+' '+ncMax);
     }
 } 
