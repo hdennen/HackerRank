@@ -1,14 +1,15 @@
 //https://www.hackerrank.com/challenges/maxsubarray
-//replaced my recursive function with Kadane's algorithm. Much faster, but needs fixing to handle negatives.
+//replaced my recursive function with Kadane's algorithm. fixed to handle negatives.
 function processData(input) {
     'use strict';
     const tests = input.split('\n');
     const t = tests.shift();
     const kadane = function(test){ //Kadane's algorithm for max contiguous array.
-        let currentTotal = 0; 
-        let maxSoFar = 0;
-        for(let item of test){
-            currentTotal = Math.max(0, currentTotal+item);
+        let currentTotal = test[0]; 
+        let maxSoFar = test[0];
+        let len = test.length;
+        for(let i=1;i<len;i++){
+            currentTotal = Math.max(test[i], currentTotal+test[i]);
             maxSoFar = Math.max(maxSoFar,currentTotal)
         }
         max = maxSoFar;
