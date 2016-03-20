@@ -4,16 +4,19 @@ function processData(input) {
     'use strict';
     const lines = input.split('\r\n'); // well carriage return is new. \r.
     let nTests = lines.shift();
+    let i = 0; // should bring us to the beginning of each test.
     while(nTests>0){
-        let i = 0;
-        let edges = lines[i].split(' ');
-        let nodes = edges.shift();
+        let ne = lines[i].split(' '); //temp
+        let nodes = parseInt(ne.shift()); //number of nodes
+        let numEdges = parseInt(ne); //number of edges
+        let startPos = lines[i+1+numEdges]; //starting position
         
-        for(let ai = i+1; ai<parseInt(edges)+1; ai++){
-            
+        let edges =[];
+        for(let a = i+1; a<=numEdges; a++){ //loop through each edge of current test.
+            edges.push(lines[a]);
         }
-        
-        i += parseInt(edges)+2; //account for the first and last lines of the test
-        nTests--;
+        console.log(edges);
+        i += numEdges+2; //increment to beginning of next test
+        nTests--; //decrement tests
     }
 } 
