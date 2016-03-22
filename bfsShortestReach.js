@@ -18,7 +18,6 @@ function processData(input) {
         for(let a = i+1; a<=i+numEdges; a++){ //fill array of edges.
             edges.push(lines[a].split(' ').map(Number));
         }
-        
         let queue = [];
         let level = 1;
         queue.push(startPos); //add start position to queue.
@@ -44,14 +43,11 @@ function processData(input) {
                 }
             }
             queue.shift();
-            if(subQueue.length > 0){
+            if(subQueue.length > 0 && queue.length == 0){
                     level++;
                     queue = queue.concat(subQueue);
                 }
         }
-        
-        
-        
         let nodesArr = [];
         let c = 1;
         while(numNodes>0){ //create queue of nodes.
@@ -69,9 +65,7 @@ function processData(input) {
             }else{
                 answer += '-1 ';
             }
-
         }
-        //console.log(distances);
         console.log(answer);
         
         i += numEdges+2; //increment to beginning of next test
