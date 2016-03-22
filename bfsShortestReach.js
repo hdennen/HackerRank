@@ -10,6 +10,7 @@ function processData(input) {
         let numNodes = parseInt(ne.shift()); //number of nodes
         let numEdges = parseInt(ne); //number of edges
         let startPos = parseInt(lines[i+1+numEdges]); //starting position
+        
         let distances = {}; //object to keep track what level each item in queue is on.
         let visited = [startPos];
         let edges =[];
@@ -37,29 +38,18 @@ function processData(input) {
                     queue.push(edge[0]);
                     counter++;
                     
-                    if(!(level in distances)){
-                        distances[level] = [];
-                        distances[level].push(edge[0]);
-                    }else{
-                        distances[level].push(edge[0]);
-                    }
+                    distances[edge[0]] = level;
                     
                 }else if(ni == 0 && vie1 == -1){
                     visited.push(edge[1]);
                     queue.push(edge[1]);
                     counter++;
                     
-                    if(!(level in distances)){
-                        distances[level] = [];
-                        distances[level].push(edge[1]);
-                    }else{
-                        distances[level].push(edge[1]);
-                    }
+                    distances[edge[1]] = level;
                 }
                     
             }
             queue.shift();
-            console.log(counter);
             counter--;
         }
         
@@ -74,21 +64,17 @@ function processData(input) {
         nodesArr.splice(nodesArr.indexOf(startPos), 1); //remove start node from nodes
         
         let answer = ''; //get the answer ready.
-        
+        //to-do fix this.
         for (let n of nodesArr){ //loop through nodes.
-            for(let l in distances){ //for each node, loop through distances object.
-                if(distances[l].indexOf(n) == -1){
-                    answer += '-1 ';
-                }
-                else{
-                    let trueDistance = l*6;
-                    answer += trueDistance+' ';
-                }
+            if(n in distances){
+                answer += distances[n]*6+' ';
+            }else{
+                answer += '-1 ';
             }
-        }
 
-        console.log(answer);
+        }
         console.log(distances);
+        console.log(answer);
         
         i += numEdges+2; //increment to beginning of next test
         nTests--; //decrement tests
