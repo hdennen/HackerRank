@@ -20,14 +20,11 @@ function processData(input) {
         }
         
         let queue = [];
-        let counter = 0;
-        let level = 0;
+        let level = 1;
         queue.push(startPos); //add start position to queue.
         while(queue.length > 0){ //use whatever is at start of queue
-            if(counter == 0){
-                level++;
-            }
             let n = queue[0];
+            let subQueue = [];
             for(let edge of edges){ //this could be optimized by sanitizing edges array of used edges.
                 let ni = edge.indexOf(n);
                 let vie0 = visited.indexOf(edge[0]);
@@ -35,23 +32,24 @@ function processData(input) {
                 
                 if(ni == 1 && vie0 == -1){ //if contains n and isn't already visited.
                     visited.push(edge[0]);
-                    queue.push(edge[0]);
-                    counter++;
+                    subQueue.push(edge[0]);
                     
                     distances[edge[0]] = level;
                     
                 }else if(ni == 0 && vie1 == -1){
                     visited.push(edge[1]);
-                    queue.push(edge[1]);
-                    counter++;
+                    subQueue.push(edge[1]);
                     
                     distances[edge[1]] = level;
                 }
-                    
             }
             queue.shift();
-            counter--;
+            if(subQueue.length > 0){
+                    level++;
+                    queue = queue.concat(subQueue);
+                }
         }
+        
         
         
         let nodesArr = [];
@@ -73,7 +71,7 @@ function processData(input) {
             }
 
         }
-        console.log(distances);
+        //console.log(distances);
         console.log(answer);
         
         i += numEdges+2; //increment to beginning of next test
