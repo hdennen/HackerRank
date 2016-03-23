@@ -6,9 +6,9 @@ function processData(input) {
     const e = arr.slice(-1).join('');
     for(let i = size-2; i>=0; i--){
         
-        if(arr[i] > 3){
+        if(arr[i] > e){
             arr.splice(i+1,1,arr[i]);
-        }else{
+        }else if(arr[i] <= e){
             arr.splice(i+1,1,e);
         }
         console.log(arr.join(' '));
