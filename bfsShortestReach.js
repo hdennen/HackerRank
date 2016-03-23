@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/bfsshortreach
-//moves through queue and saves visited nodes, but still not counting distance.
+//Works but times out on big data sets.
 function processData(input) {
     'use strict';
     const lines = input.split('\n'); // the invisible carriage return: "\r". wtf?
@@ -20,33 +20,30 @@ function processData(input) {
         }
         let queue = [];
         let level = 1;
+        let subQueue = [];
         queue.push(startPos); //add start position to queue.
         while(queue.length > 0){ //use whatever is at start of queue
             let n = queue[0];
-            let subQueue = [];
             for(let edge of edges){ //this could be optimized by sanitizing edges array of used edges.
                 let ni = edge.indexOf(n);
                 let vie0 = visited.indexOf(edge[0]);
                 let vie1 = visited.indexOf(edge[1]);
-                
                 if(ni == 1 && vie0 == -1){ //if contains n and isn't already visited.
-                    visited.push(edge[0]);
+                    visited.push(edge[0]); 
                     subQueue.push(edge[0]);
-                    
-                    distances[edge[0]] = level;
-                    
+                    distances[edge[0]] = level; //track which level we're on.
                 }else if(ni == 0 && vie1 == -1){
                     visited.push(edge[1]);
                     subQueue.push(edge[1]);
-                    
-                    distances[edge[1]] = level;
+                    distances[edge[1]] = level; //track which level we're on.
                 }
             }
             queue.shift();
             if(subQueue.length > 0 && queue.length == 0){
-                    level++;
-                    queue = queue.concat(subQueue);
-                }
+                level++;
+                queue = subQueue;
+                subQueue = []; //had to clear it here, otherwise it got cleared improperly and missed certain numbers. weird.
+             }
         }
         let nodesArr = [];
         let c = 1;
@@ -58,7 +55,6 @@ function processData(input) {
         nodesArr.splice(nodesArr.indexOf(startPos), 1); //remove start node from nodes
         
         let answer = ''; //get the answer ready.
-        //to-do fix this.
         for (let n of nodesArr){ //loop through nodes.
             if(n in distances){
                 answer += distances[n]*6+' ';
