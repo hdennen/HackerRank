@@ -1,5 +1,7 @@
 //https://www.hackerrank.com/challenges/bfsshortreach
-//Works but times out on big data sets.
+//Using queue.js
+function Queue(){var a=[],b=0;this.getLength=function(){return a.length-b};this.isEmpty=function(){return 0==a.length};this.enqueue=function(b){a.push(b)};this.dequeue=function(){if(0!=a.length){var c=a[b];2*++b>=a.length&&(a=a.slice(b),b=0);return c}};this.peek=function(){return 0<a.length?a[b]:void 0}};
+
 function processData(input) {
     'use strict';
     const lines = input.split('\n'); // the invisible carriage return: "\r". wtf?
@@ -18,31 +20,32 @@ function processData(input) {
         for(let a = i+1; a<=i+numEdges; a++){ //fill array of edges.
             edges.push(lines[a].split(' ').map(Number));
         }
-        let queue = [];
+        let queue = new Queue();
         let level = 1;
-        let subQueue = [];
-        queue.push(startPos); //add start position to queue.
-        while(queue.length > 0){ //use whatever is at start of queue
-            let n = queue[0];
+        let subQueue = new Queue();
+        queue.enqueue(startPos); //add start position to queue.
+        while(!queue.isEmpty()){ //use whatever is at start of queue
+            let n = queue.dequeue(); //start at beginning of queue.
             for(let edge of edges){ //this could be optimized by sanitizing edges array of used edges.
                 let ni = edge.indexOf(n);
-                let vie0 = visited.indexOf(edge[0]);
-                let vie1 = visited.indexOf(edge[1]);
-                if(ni == 1 && vie0 == -1){ //if contains n and isn't already visited.
-                    visited.push(edge[0]); 
-                    subQueue.push(edge[0]);
-                    distances[edge[0]] = level; //track which level we're on.
-                }else if(ni == 0 && vie1 == -1){
-                    visited.push(edge[1]);
-                    subQueue.push(edge[1]);
-                    distances[edge[1]] = level; //track which level we're on.
+                if(ni == 1 || ni == 0){
+                    let vie0 = visited.indexOf(edge[0]);
+                    let vie1 = visited.indexOf(edge[1]);
+                    if(ni == 1 && vie0 == -1){ //if contains n and isn't already visited.
+                        visited.push(edge[0]); 
+                        subQueue.enqueue(edge[0]);
+                        distances[edge[0]] = level; //track which level we're on.
+                    }else if(ni == 0 && vie1 == -1){
+                        visited.push(edge[1]);
+                        subQueue.enqueue(edge[1]);
+                        distances[edge[1]] = level; //track which level we're on.
+                    }
                 }
             }
-            queue.shift();
-            if(subQueue.length > 0 && queue.length == 0){
+            if(!subQueue.isEmpty() && queue.isEmpty()){
                 level++;
                 queue = subQueue;
-                subQueue = []; //had to clear it here, otherwise it got cleared improperly and missed certain numbers. weird.
+                subQueue = new Queue(); //had to clear it here, otherwise it got cleared improperly and missed certain numbers. weird.
              }
         }
         let nodesArr = [];
@@ -68,3 +71,14 @@ function processData(input) {
         nTests--; //decrement tests
     }
 } 
+
+process.stdin.resume();
+process.stdin.setEncoding("ascii");
+_input = "";
+process.stdin.on("data", function (input) {
+    _input += input;
+});
+
+process.stdin.on("end", function () {
+   processData(_input);
+});
