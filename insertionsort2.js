@@ -1,9 +1,9 @@
 //https://www.hackerrank.com/challenges/insertionsort2
-//needed to add breaks to while loop after insertion so it wouldn't fire again on a duplicate.
+//sorting strings doesn't work so well... next time remember to .map(Number)
 function processData(input) {
     'use strict';
     const size = input.split('\n');
-    const arr = size.pop().split(' ');
+    const arr = size.pop().split(' ').map(Number);
     let e = 0;
     let prev = 0;
     for(let i = 1; i<size; i++){
@@ -28,4 +28,4 @@ function processData(input) {
             console.log(arr.join(' '));
         }
     }
-} 
+}
