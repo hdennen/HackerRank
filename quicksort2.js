@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/quicksort2
-//printing at the right time but not sorting correctly.
+//Recursionnnnn!!!!!!
 function processData(input) {
     'use strict';
     const size = input.split('\n');
@@ -22,16 +22,15 @@ function processData(input) {
             }
         }
         if(left.length>1){
-            partition(left);
-            console.log(left.join(' '));
+            left = partition(left); //Recycle the left array. because this happens first, !!===> the smallest iteration will print first due to recursion. <===!!
+            console.log(left.join(' ')); //and printing the joined array that comes out.
         }
-        if(right.length>1){
-            partition(right);
+        if(right.length>1){ //same as above for the right side.
+            right = partition(right);
             console.log(right.join(' '));
         }
-        return left.join(' ') +" "+ p +" "+ right.join(' ');
+        let newArr = [];
+        return newArr.concat(left,p,right); //making sure this spits out an array is crucial.
     }
-    
-    console.log(partition(array));
-
+    console.log(partition(array).join(' '));
 } 
