@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
-//still failing tests..
+//fixed for j === len-1, but still failing with duplicate letters.
 function processData(input) {
     'use strict';
     const w = input.split('\n'); //strings
@@ -50,6 +50,8 @@ function processData(input) {
                         test = test+subStrArr.sort().join('');
                         break big;
                     }else if(j === len-1){ //stop at end of string.
+                        test = stringSplice(test,l-1,1,test[j]); //splice smallest larger into p position.
+                        test = stringSplice(test,j,1,p); //splice p into smallest larger position.
                         let subStrArr = test.substr(l).split(''); //generate substring to sort
                         test = stringSplice(test,l,len-l); //cut off the end we're sorting
                         test = test+subStrArr.sort().join('');
