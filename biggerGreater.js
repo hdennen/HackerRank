@@ -1,4 +1,5 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
+//second while not working
 function processData(input) {
     'use strict';
     const w = input.split('\n'); //strings
@@ -34,26 +35,30 @@ function processData(input) {
             let j = l-1;
             if (test[j] < test[l]){
                 let p = test[j];
+                if(p === test[len-2]){
+                    test = stringSplice(test,j,1,test[l]); //splice smallest larger into p position.
+                    test = stringSplice(test,l,1,p); //splice p into smallest larger position.
+                    break big;
+                }
                 while(j++){ //turn around
+                    console.log("test:"+test+" j:"+j+" l:"+l);
                     if(test[j]<p){//swap j-1 with p
+                        console.log("j:"+j+" p:"+p);
                         test = stringSplice(test,l-1,1,test[j-1]); //splice smallest larger into p position.
                         test = stringSplice(test,j-1,1,p); //splice p into smallest larger position.
+                        let subStrArr = test.substr(l).split(''); //generate substring to sort
+                        console.log(subStrArr);
+                        test = stringSplice(test,l,len-l); //cut off the end we're sorting
+                        test = test+subStrArr.sort().join('');
                         break big;
                     }
-                    if(j === len-1){
+                    if(j === len-1){ //stop at end of string.
                         break big;
                     }
                 }
             }
         }
-        //sort from l
-        
-        if(l === 0){
-            console.log('no answer');
-        }
-        let subStrArr = test.substr(l).split(''); //generate substring to sort starting at insertion
-        test = stringSplice(test,l,len-l); //cut off the end we're sorting
-        test = test+subStrArr.sort().join('');
+
         console.log(test);
     }
 }
