@@ -1,8 +1,8 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
 function processData(input) {
     'use strict';
-    const w = input.split('\n');
-    const t = w.shift();
+    const w = input.split('\n'); //strings
+    const t = w.shift(); //tests
     
     function stringSplice(source, index, deleteChars, insert) { //handy splice function for strings.
         insert = insert || '';
@@ -27,33 +27,33 @@ function processData(input) {
         return arr;
     }
     
-    for(let test of w){
+    for(let test of w){// loop through tests.
         let l = test.length;
-        let i = 0; //create here for scope.
-        big: while(l--){
-            i = l;
-            let tL = test[l];
-            while(i--){
-                if(tL > test[i]){
-                    test = stringSplice(test,l,1); //delete char
-                    test = stringSplice(test,i,0,tL); //insert char
-                    let subStrArr = test.substr(i+1).split(''); //generate substring to sort starting at insertion
-                    if(subStrArr.length > 1){
-                        let subStr = insertionSort(subStrArr).join('');
-                        test = test.substring(0,i+1)+subStr;
-                        console.log(test);
-                    }else{
-                        console.log(test);
+        let len = test.length;
+        big: while(l--){ //start at end
+            let j = l-1;
+            if (test[j] < test[l]){
+                let p = test[j];
+                while(j++){ //turn around
+                    if(test[j]<p){//swap j-1 with p
+                        test = stringSplice(test,l-1,1,test[j-1]); //splice smallest larger into p position.
+                        test = stringSplice(test,j-1,1,p); //splice p into smallest larger position.
+                        break big;
                     }
-                    //console.log(test);
-                    break big;
+                    if(j === len-1){
+                        break big;
+                    }
                 }
             }
-            if(l === 0){
-                console.log('no answer');
-            }
         }
-        let subStrArr = test.substr(i).split(''); //generate substring to sort starting at insertion
-        insertionSort(subStrArr).join('');
+        //sort from l
+        
+        if(l === 0){
+            console.log('no answer');
+        }
+        let subStrArr = test.substr(l).split(''); //generate substring to sort starting at insertion
+        test = stringSplice(test,l,len-l); //cut off the end we're sorting
+        test = test+subStrArr.sort().join('');
+        console.log(test);
     }
-} 
+}
