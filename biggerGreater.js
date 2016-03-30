@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
-//need to account for when pivot doesn't move.
+//still failing tests..
 function processData(input) {
     'use strict';
     const w = input.split('\n'); //strings
@@ -41,18 +41,20 @@ function processData(input) {
                     break big;
                 }
                 while(j<len){ //turn around
-                    if(test[j]<p){//swap j-1 with p
+                    j++;
+                    if(test[j]<=p){//swap j-1 with p
                         test = stringSplice(test,l-1,1,test[j-1]); //splice smallest larger into p position.
                         test = stringSplice(test,j-1,1,p); //splice p into smallest larger position.
                         let subStrArr = test.substr(l).split(''); //generate substring to sort
                         test = stringSplice(test,l,len-l); //cut off the end we're sorting
                         test = test+subStrArr.sort().join('');
                         break big;
-                    }
-                    if(j === len-1){ //stop at end of string.
+                    }else if(j === len-1){ //stop at end of string.
+                        let subStrArr = test.substr(l).split(''); //generate substring to sort
+                        test = stringSplice(test,l,len-l); //cut off the end we're sorting
+                        test = test+subStrArr.sort().join('');
                         break big;
                     }
-                    j++;
                 }
             }else if(l === 0){
                 test = 'no answer';
