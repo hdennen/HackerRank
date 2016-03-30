@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
-//fixed for j === len-1, but still failing with duplicate letters.
+//compared chars instead of index which cause dups problem.
 function processData(input) {
     'use strict';
     const w = input.split('\n'); //strings
@@ -35,7 +35,7 @@ function processData(input) {
             let j = l-1;
             if (test[j] < test[l]){
                 let p = test[j];
-                if(p === test[len-2]){
+                if(j === len-2){//make sure this looks at index and not char!
                     test = stringSplice(test,j,1,test[l]); //splice smallest larger into p position.
                     test = stringSplice(test,l,1,p); //splice p into smallest larger position.
                     break big;
