@@ -1,5 +1,5 @@
 //https://www.hackerrank.com/challenges/bigger-is-greater
-//needs 'no answer' function.
+//need to account for when pivot doesn't move.
 function processData(input) {
     'use strict';
     const w = input.split('\n'); //strings
@@ -54,6 +54,8 @@ function processData(input) {
                     }
                     j++;
                 }
+            }else if(l === 0){
+                test = 'no answer';
             }
         }
 
