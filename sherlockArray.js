@@ -12,21 +12,22 @@ function processData(input) {
             console.log('NO');
         }else if(len >2){
             let arr = lines[i+1].split(' ').map(Number);
-            let j = 0;
+            let j = 1;
+            let left = 0;
+            let right = arr.slice(1,len).reduce((a,b)=>a+b); //only need to sum once!
             while(j<len){
-                j++;
-                if(j == len-1){
+                if(j == len-1){//end of array?
                     console.log('NO');
                     break;
                 }
-                let left = arr.slice(0,j).reduce((a,b)=>a+b);
-                let right = arr.slice(j+1,len).reduce((a,b)=>a+b);
-                if(left === right){
+                left +=  arr[j-1]; //then just move values over from right to left...
+                right -= arr[j];
+                if(left === right){ //and check if they're ever equal
                     console.log('YES');
                     break;
                 }
+                j++;
             }
         }
-
     }
 } 
