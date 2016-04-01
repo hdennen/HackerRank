@@ -36,8 +36,15 @@ function processData(input) {
             }
         }
         let pI = arr.indexOf(pNum)+1;
-        arr.splice(pNum,1);
-        let jI = arr.indexOf(jNum)+2;
-        console.log(pI+" "+jI);
+        let jI = arr.indexOf(jNum)+1;
+        if (pI == jI){
+            arr.splice(pNum-1,1);
+            jI = arr.indexOf(jNum)+2;
+            console.log(pI+" "+jI);
+        }else if(pI < jI){
+            console.log(pI+" "+jI);
+        }else if(pI > jI){
+            console.log(jI+" "+pI);
+        }
     }
 } 
