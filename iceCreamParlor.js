@@ -16,7 +16,6 @@ function processData(input) {
         }else{
             for(j=0;j<n;j++){ //or go find j
                 if(arr2[j]>m){
-                    j--;
                     break;
                 }
             }
