@@ -1,3 +1,4 @@
+//https://www.hackerrank.com/challenges/chocolate-feast
 function main() {
     var t = parseInt(readLine());
     for(var a0 = 0; a0 < t; a0++){
@@ -8,10 +9,12 @@ function main() {
         var chocs = Math.floor(n/c);
         var wraps = Math.floor(n/c);
         var freeChocs = 0;
+        var trade = 0;
         while(wraps>=m){
-            freeChocs += Math.floor(wraps/m);
-            wraps-=freeChocs*m;
-            wraps+=freeChocs;
+            trade = Math.floor(wraps/m);
+            freeChocs+=trade;
+            wraps-=trade*m;
+            wraps+=trade;
         }
         var totalChocs = chocs + freeChocs;
         console.log(totalChocs);
