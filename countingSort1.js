@@ -6,9 +6,16 @@ function processData(input) {
     arr = arr[0].split(' ').map(Number);
     let occur = [];
     let i=0;
+    let c=0;
     while(i<100){
-        occur.push(arr.reduce((pV,cV)=> pV+(cV===i), 0)); //reduce magic.
+        c = 0;
+        for(let n of arr){
+            if(n===i){
+                c++;
+            }
+        }
+        occur.push(c);
         i++;
     }
     console.log(occur.join(' '));
-}
+} 
