@@ -30,12 +30,14 @@ function processData(input) {
         let letters = '';
         if(i<h){
             letters = '-';
-        }else{
+        }else if(num<10){
             letters = arr[i].slice(2);
+        }else {
+            letters = arr[i].slice(3);
         }
         let pos = helper[num]-frequency[num] ;
         answer[pos] = letters;
         frequency[num]--;
     }
     console.log(answer.join(' '));
-} 
+}  
