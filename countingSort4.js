@@ -1,33 +1,41 @@
 //https://www.hackerrank.com/challenges/countingsort4
 function processData(input) {
     'use strict';
-    const arr = input.split('\n');
-    const len = arr.shift();
+    let arr = input.split('\n');
+    const len = parseInt(arr.shift());
     const h = len/2;
-    for(let j in arr){
-        arr[j] = arr[j].split(' ');
+    let frequency = new Array(100).fill(0);
+    let sorted = [];
+    let helper = [];
+    let answer = new Array(len);
+    
+    for(let i=0;i<len;i++){
+        frequency[parseInt(arr[i].slice(0,2))]++;
     }
-    let answer = [];
-    let sortedArr = [];
-    let c=0;
     for(let i=0;i<100;i++){
-        c = 0;
-        for(let n=0;n<len;n++){
-            if(arr[n][0]==i){
-                c++;
-                sortedArr.push([arr[n][0],arr[n][1],n]);
+        let n = frequency[i];
+        if(n>0){
+            while(n--){
+               sorted.push(i); 
             }
         }
-        if(c===0){
-            break;
-        }
     }
-    for(let x of sortedArr){
-        if(x[2]>=h){
-            answer.push(x[1]);
+    let x = 0;
+    for(let i=0;i<100;i++){
+        x += frequency[i];
+        helper.push(x);
+    }
+    for(let i=0;i<len;i++){
+        let num = parseInt(arr[i].slice(0,2));
+        let letters = '';
+        if(i<h){
+            letters = '-';
         }else{
-            answer.push('-');
+            letters = arr[i].slice(2);
         }
+        let pos = helper[num]-frequency[num] ;
+        answer[pos] = letters;
+        frequency[num]--;
     }
     console.log(answer.join(' '));
 } 
