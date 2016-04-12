@@ -3,25 +3,25 @@ function processData(input) {
     'use strict';
     let arr = input.split('\n');
     const len = arr.shift();
-    for(let j in arr){
-        arr[j] = arr[j].split(' ');
-    }
+    let frequency = new Array(100).fill(0);
+    let sorted = [];
+    let helper = [];
     
-    let occur = [];
-    let i=0;
-    let c=0;
-    let tmp = 0
-    while(i<100){
-        c = 0;
-        for(let n=0;n<len;n++){
-            if(arr[n][0]==i){
-                c++;
+    for(let i=0;i<len;i++){
+        frequency[parseInt(arr[i].slice(0,2))]++;
+    }
+    for(let i=0;i<100;i++){
+        let n = frequency[i];
+        if(n>0){
+            while(n--){
+               sorted.push(i); 
             }
         }
-        c+=tmp;
-        tmp = c;
-        occur.push(c);
-        i++;
     }
-    console.log(occur.join(' '));
-} 
+    let x = 0;
+    for(let i=0;i<100;i++){
+        x += frequency[i];
+        helper.push(x);
+    }
+    console.log(helper.join(' '));
+}  
