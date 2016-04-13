@@ -23,18 +23,23 @@ function processData(input) {
         return i; //return i so we have a pivot point for recursive sort.
     }
     let quickSort = function(arr, lo, hi){
+        if(lo == hi){ 
+            console.log(arr[lo]);
+        }
         if(lo < hi){ //only so long as something still isn't sorted.
             let p = partition(arr, lo, hi); //grab latest low index.
             if(arr.indexOf(p)===h){
                 console.log(arr[p]);
-                return arr[p];
+                //return arr[p];
             }else if(arr.indexOf(p)<h){
+                //console.log(arr);
                 quickSort(arr, p + 1, hi); //recursively call again for top partition.
             }else if(arr.indexOf(p)>h){
+                //console.log(arr);
                 quickSort(arr, lo, p - 1); //recursively call again for bottom partition.
             }
         }
-        //return arr;
+        //console.log(arr);
     }
     quickSort(arr, 0, len-1);
 } 
