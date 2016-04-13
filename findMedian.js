@@ -28,18 +28,14 @@ function processData(input) {
         }
         if(lo < hi){ //only so long as something still isn't sorted.
             let p = partition(arr, lo, hi); //grab latest low index.
-            if(arr.indexOf(p)===h){
+            if(p===h){
                 console.log(arr[p]);
-                //return arr[p];
-            }else if(arr.indexOf(p)<h){
-                //console.log(arr);
+            }else if(p<h){
                 quickSort(arr, p + 1, hi); //recursively call again for top partition.
-            }else if(arr.indexOf(p)>h){
-                //console.log(arr);
+            }else if(p>h){
                 quickSort(arr, lo, p - 1); //recursively call again for bottom partition.
             }
         }
-        //console.log(arr);
     }
     quickSort(arr, 0, len-1);
 } 
