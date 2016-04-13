@@ -4,13 +4,13 @@ function processData(input) {
     let lines = input.split('\n');
     const nkq = lines[0].split(' ');
     const len = parseInt(nkq[0]);
-    const cycles = nkq[1];
-    const queries = nkq[2];
+    const cycles = parseInt(nkq[1]);
+    const queries = parseInt(nkq[2]);
     let arr = lines[1].split(' ');
     
     let tc = cycles%len;
     
-    for(let i=2; i<cycles+2; i++){
+    for(let i=2; i<queries+2; i++){
         let qi = parseInt(lines[i]);
         let iTop = len-1;
         if(qi>=tc){
