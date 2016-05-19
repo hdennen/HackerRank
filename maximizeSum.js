@@ -4,21 +4,28 @@ function processData(input) {
     const tests = input.split('\n');
     const t = tests.slice(0,1);
     
-    function modKadane(test, m){ //modified Kadane's algorithm to return subarray modulo max.
-        let modCurrentTotal = 0;
-        let modMaxSoFar = 0;
+    function bruteForce(test, m){
         let len = test.length;
-        let totals = [];
-        for(let i=1;i<len;i++){
-            modCurrentTotal = Math.max(test[i]%m, (modCurrentTotal+test[i])%m);
-            modMaxSoFar = Math.max(modMaxSoFar%m,modCurrentTotal%m);
+        let prefix = [];
+        let curr = 0;
+        for(let i=0; i<len; i++) { //make prefix table of mods.
+            curr = (test[i] % m + curr) % m;
+            prefix[i] = curr;
         }
-        return modMaxSoFar;
+        
+        let modMax = 0;
+        for(let i=0; i<len; i++) {
+            for(let j=i-1; j>=0; j--) {
+                modMax = Math.max(modMax, (prefix[i] - prefix[j] + m) % m);
+            }
+            modMax = Math.max(modMax, prefix[i]);
+        }
+        return modMax;
     }
-    
+
     for (let i=1; i<t*2; i+=2){ //loop through each test
         let m = tests[i].split(' ').map(Number).pop();
         let test = tests[i+1].split(' ').map(Number);
-        console.log(modKadane(test,m));
+        console.log(bruteForce(test,m));
     }
-} 
+}
