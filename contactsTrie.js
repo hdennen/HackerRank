@@ -20,12 +20,10 @@ function Trie() {
         let current = this.head;
         for (let i = 1; i <= len; i++) {
             if (!current[name.slice(0, i)]) {
-                current[name.slice(0, i)] = {};
+                current[name.slice(0, i)] = {words: 0};
             }
             current = current[name.slice(0, i)];
-            if (i === len) {
-                current['word'] = true;
-            }
+            current.words++;
         }
     }
     
@@ -43,23 +41,11 @@ function Trie() {
         }
         
         if (current) {
-            counter = this.count(current)
+            console.log(current.words);
+            return
         }
         
-        console.log(counter);
-    }
-    
-    this.count = function(current) {
-        let counter = 0;
-        for (var property in current) {
-            if (current.hasOwnProperty(property)) {
-                if (current[property]['word']) {
-                    counter++;
-                }
-                counter += this.count(current[property]);
-            }
-        }
-        return counter;
+        console.log(0);
     }
 }
 
